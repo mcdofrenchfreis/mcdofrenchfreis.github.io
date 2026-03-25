@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+@theme {
+  --dark-mode: selector;
+}
+
+@layer base {
+  :root {
+    --background: #fbfbfb;
+    --text-primary: #0f172a;
+    --card-bg: #ffffff;
+    --card-border: #e2e8f0;
+  }
+  
+  .dark {
+    --background: #020617;
+    --text-primary: #f1f5f9;
+    --card-bg: #0f172a;
+    --card-border: #1e293b;
+    color-scheme: dark;
+  }
+
+  html, body {
+    height: 100%;
+    transition: background-color 0.5s ease, color 0.5s ease;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--text-primary);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+}
