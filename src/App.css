@@ -6,17 +6,17 @@
 
 @layer base {
   :root {
-    --background: #fbfbfb;
+    --background: #f1f5f9;
     --text-primary: #0f172a;
     --card-bg: #ffffff;
-    --card-border: #e2e8f0;
+    --card-border: #cbd5e1;
   }
   
   .dark {
     --background: #020617;
     --text-primary: #f1f5f9;
     --card-bg: #0f172a;
-    --card-border: #1e293b;
+    --card-border: #334155;
     color-scheme: dark;
   }
 
