@@ -7,14 +7,40 @@ import {
   Phone,
   Github,
   Sun,
-  Moon
+  Moon,
+  ExternalLink
 } from 'lucide-react';
+import {
+  FaJava,
+  FaPython,
+  FaPhp,
+  FaHtml5,
+  FaCss3Alt,
+  FaReact,
+  FaDatabase,
+  FaDocker,
+  FaLinux,
+  FaGitAlt,
+  FaProjectDiagram,
+  FaJs
+} from 'react-icons/fa';
+
+import {
+  SiCplusplus,
+  SiTypescript,
+  SiExpo,
+  SiFastapi,
+  SiDjango,
+  SiTailwindcss,
+  SiPostgresql,
+  SiMysql,
+  SiVite,
+  SiGo
+} from 'react-icons/si';
+
 import './App.css';
 
-// --- ATOMIC COMPONENTS (CSS VARIABLE DRIVEN) ---
-
 const BentoCard = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => (
-  // Using variables for bg and border to avoid dark: modifiers and resolve IDE warnings
   <div className={`bg-[var(--card-bg)] border border-[var(--card-border)] rounded-2xl p-6 md:p-8 shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:scale-[1.01] h-full ${className}`}>
     {children}
   </div>
@@ -26,13 +52,45 @@ const SectionHeading = ({ title }: { title: string }) => (
   </div>
 );
 
-const SkillPill = ({ children }: { children: React.ReactNode }) => (
-  <span className="px-3 py-1.5 rounded-lg text-[11px] font-bold border cursor-default transition-all duration-300 hover:scale-105 bg-[var(--card-bg)] border-[var(--card-border)] text-[var(--text-primary)] hover:shadow-md hover:border-slate-300 dark:hover:border-slate-500">
-    {children}
-  </span>
-);
+const getSkillIcon = (skill: string) => {
+  const s = skill.toLowerCase();
+  if (s.includes('java') && !s.includes('javascript')) return <FaJava className="text-sm opacity-80" />;
+  if (s.includes('python')) return <FaPython className="text-sm opacity-80" />;
+  if (s.includes('c++')) return <SiCplusplus className="text-sm opacity-80" />;
+  if (s.includes('php')) return <FaPhp className="text-sm opacity-80" />;
+  if (s.includes('javascript')) return <FaJs className="text-sm opacity-80" />;
+  if (s.includes('typescript')) return <SiTypescript className="text-sm opacity-80" />;
+  if (s.includes('html')) return <FaHtml5 className="text-sm opacity-80" />;
+  if (s.includes('css')) return <FaCss3Alt className="text-sm opacity-80" />;
+  if (s.includes('react')) return <FaReact className="text-sm opacity-80" />;
+  if (s.includes('expo')) return <SiExpo className="text-sm opacity-80" />;
+  if (s.includes('fastapi')) return <SiFastapi className="text-sm opacity-80" />;
+  if (s.includes('django')) return <SiDjango className="text-sm opacity-80" />;
+  if (s.includes('tailwind')) return <SiTailwindcss className="text-sm opacity-80" />;
+  if (s.includes('sql')) return <FaDatabase className="text-sm opacity-80" />;
+  if (s.includes('postgres')) return <SiPostgresql className="text-sm opacity-80" />;
+  if (s.includes('mysql')) return <SiMysql className="text-sm opacity-80" />;
+  if (s.includes('git')) return <FaGitAlt className="text-sm opacity-80" />;
+  if (s.includes('docker')) return <FaDocker className="text-sm opacity-80" />;
+  if (s.includes('vite')) return <SiVite className="text-sm opacity-80" />;
+  if (s.includes('linux')) return <FaLinux className="text-sm opacity-80" />;
+  if (s.includes('go')) return <SiGo className="text-sm opacity-80" />;
+  if (s.includes('fiber')) return <SiGo className="text-sm opacity-80" />;
+  if (s.includes('iot') || s.includes('agile')) return <FaProjectDiagram className="text-sm opacity-80" />;
+  return null;
+};
 
-const ExperienceTimeline = ({ title, company, period, bullets, tags }: { title: string, company: string, period: string, bullets: string[], tags: string[] }) => (
+const SkillPill = ({ children }: { children: React.ReactNode }) => {
+  const icon = typeof children === 'string' ? getSkillIcon(children) : null;
+  return (
+    <span className="px-3 py-1.5 flex items-center gap-1.5 rounded-full text-[11px] font-bold border cursor-default transition-all duration-300 hover:scale-105 bg-[var(--card-bg)] border-[var(--card-border)] text-[var(--text-primary)] hover:shadow-md hover:border-slate-300 dark:hover:border-slate-500">
+      {icon}
+      {children}
+    </span>
+  );
+};
+
+const ExperienceTimeline = ({ title, company, period, bullets, tags, documentLink, documentLabel }: { title: string, company: string, period: string, bullets: string[], tags: string[], documentLink?: string, documentLabel?: string }) => (
   <div className="relative pl-8 pb-12 last:pb-0">
     <div className="absolute left-0 top-3 bottom-0 w-[1px] bg-slate-300 dark:bg-slate-700 opacity-50" />
     <div className="absolute left-[-5px] top-[10px] w-2.5 h-2.5 bg-blue-600 rounded-full border-2 border-[var(--card-bg)] z-10" />
@@ -53,6 +111,13 @@ const ExperienceTimeline = ({ title, company, period, bullets, tags }: { title: 
     <div className="flex flex-wrap gap-2">
       {tags.map(t => <SkillPill key={t}>{t}</SkillPill>)}
     </div>
+    {documentLink && (
+      <div className="mt-6">
+        <a href={documentLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-[var(--text-primary)] opacity-80 hover:opacity-100 dark:hover:text-blue-400 hover:text-blue-600 transition-colors">
+          <ExternalLink size={14} /> {documentLabel || "View Related Documents"}
+        </a>
+      </div>
+    )}
   </div>
 );
 
@@ -100,8 +165,6 @@ const CertGridItem = ({ name, date, link }: { name: string, date: string, link?:
   );
 };
 
-// --- THEME TOGGLE SHORTCUT ---
-
 const ThemeToggle = ({ isDark, onToggle }: { isDark: boolean, onToggle: () => void }) => (
   <button
     onClick={onToggle}
@@ -111,8 +174,6 @@ const ThemeToggle = ({ isDark, onToggle }: { isDark: boolean, onToggle: () => vo
     {isDark ? <Sun size={18} className="text-yellow-500" /> : <Moon size={18} className="text-blue-600" />}
   </button>
 );
-
-// --- MAIN APPLICATION ---
 
 function App() {
   const [isDark, setIsDark] = useState(() => {
@@ -133,25 +194,29 @@ function App() {
   const experiences = [
     {
       title: "Barangay Information System with IoT-Enabled Incident Reporting",
-      company: "National University – Fairview | Quezon City",
+      company: "Barangay Gumaoc East — National University – Fairview | Quezon City",
       period: "08/2025 – 10/2025",
       bullets: [
         "Developed full-stack barangay info system digitizing community services and streamline administrative workflows.",
         "Reduced manual reporting and processing time by an estimated 40–60% through digital automation of incident logging.",
         "Implemented centralized, real-time records management for improved data accessibility."
       ],
-      tags: ["Go", "React Native", "PostgreSQL", "IoT"]
+      tags: ["TailwindCSS", "MySQL", "IoT"],
+      documentLink: "https://drive.google.com/file/d/1MYFKqkLkBH8_ufQH2GA4TdoQaxAcxUNa/view?usp=sharing",
+      documentLabel: "View Related Document"
     },
     {
       title: "MabInventory: Web-Based Ordering and Inventory Management",
-      company: "Mabini Vape Shop | Quezon City",
+      company: "Mabini Vape Shop — National University – Fairview | Quezon City",
       period: "03/2025 – 06/2025",
       bullets: [
         "Automated stock monitoring and sales tracking for a retail business using a centralized inventory hub.",
         "Increased inventory accuracy and reduced stock-out errors by 30–50% via automated alerts.",
         "Optimized processing time by implementing real-time inventory updates and sales logging."
       ],
-      tags: ["Fiber", "TailwindCSS", "SQLAlchemy", "Agile"]
+      tags: ["TailwindCSS", "MySQL", "Agile"],
+      documentLink: "https://drive.google.com/drive/folders/1jenoYQHzWElJWIpMGoR9ozGaTvKQlI-5?usp=sharing",
+      documentLabel: "View Related Documents"
     }
   ];
 
@@ -182,7 +247,6 @@ function App() {
 
           <div className="flex flex-col gap-10 md:gap-14">
 
-            {/* --- Identity Header --- */}
             <header className="flex flex-col md:flex-row items-center md:items-start justify-between gap-10">
               <div className="text-center md:text-left">
                 <h1 className="text-4xl md:text-6xl font-bold tracking-tighter text-[var(--text-primary)] mb-4">
@@ -190,8 +254,6 @@ function App() {
                 </h1>
                 <p className="text-[var(--text-primary)] font-bold mb-10 text-base md:text-xl flex flex-wrap justify-center md:justify-start items-center gap-3">
                   Fullstack Developer
-                  <span className="w-1.5 h-1.5 bg-[var(--text-primary)] opacity-30 rounded-full" />
-                  National University Student
                 </p>
                 <div className="flex flex-wrap justify-center md:justify-start gap-y-4 gap-x-10">
                   <span className="flex items-center gap-3 text-[11px] font-black uppercase tracking-widest text-[var(--text-primary)]"><Phone size={14} className="text-blue-500" /> 09162291763</span>
@@ -218,10 +280,8 @@ function App() {
               </div>
             </header>
 
-            {/* --- Bento Layout --- */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-10">
 
-              {/* Left Side */}
               <div className="lg:col-span-8 flex flex-col gap-8 md:gap-10">
                 <BentoCard>
                   <SectionHeading title="Experience" />
@@ -242,7 +302,6 @@ function App() {
                 </BentoCard>
               </div>
 
-              {/* Right Side */}
               <div className="lg:col-span-4 flex flex-col gap-8 md:gap-10">
                 <BentoCard>
                   <SectionHeading title="Stack" />
@@ -298,26 +357,25 @@ function App() {
 
             </div>
 
-            {/* --- Footer --- */}
             <footer className="pt-8 pb-6 flex justify-center items-center">
               <div className="flex items-center opacity-80 hover:opacity-100 transition-all duration-500 hover:scale-105 transform-gpu cursor-default">
                 <span className="text-[var(--text-primary)] text-xl md:text-3xl font-bold -mr-4 md:-mr-8 relative z-10">
                   &copy;
                 </span>
-                <div 
+                <div
                   className="w-48 h-20 md:w-72 md:h-28 bg-[var(--text-primary)]"
-                style={{
-                  WebkitMaskImage: "url('/ttd.png')",
-                  WebkitMaskSize: "contain",
-                  WebkitMaskRepeat: "no-repeat",
-                  WebkitMaskPosition: "center",
-                  maskImage: "url('/ttd.png')",
-                  maskSize: "contain",
-                  maskRepeat: "no-repeat",
-                  maskPosition: "center",
-                }}
-                title="xevan signature"
-              />
+                  style={{
+                    WebkitMaskImage: "url('/ttd.png')",
+                    WebkitMaskSize: "contain",
+                    WebkitMaskRepeat: "no-repeat",
+                    WebkitMaskPosition: "center",
+                    maskImage: "url('/ttd.png')",
+                    maskSize: "contain",
+                    maskRepeat: "no-repeat",
+                    maskPosition: "center",
+                  }}
+                  title="xevan signature"
+                />
               </div>
             </footer>
 
