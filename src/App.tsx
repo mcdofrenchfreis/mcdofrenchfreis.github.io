@@ -337,11 +337,7 @@ function App() {
                       honors={[
                         <>
                           Dean’s Lister (First Honors)
-                          <span className="block font-normal mt-1 opacity-80">Academic Year 2023–2024</span>
-                        </>,
-                        <>
-                          Dean’s Lister (First Honors)
-                          <span className="block font-normal mt-1 opacity-80">Academic Year 2024–2025 (Term 1 & Term 2)</span>
+                          <span className="block font-normal mt-1 opacity-80">Academic Years 2023–2024 & 2024–2025 (Term 1 & Term 2)</span>
                         </>
                       ]}
                     />
