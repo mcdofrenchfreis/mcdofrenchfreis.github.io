@@ -193,37 +193,55 @@ function App() {
 
   const experiences = [
     {
-      title: "Barangay Information System with IoT-Enabled Incident Reporting",
-      company: "Barangay Gumaoc East — National University – Fairview | Quezon City",
-      period: "08/2025 – 10/2025",
+      title: "Application Developer Intern",
+      company: "Sakai — Ride-Hailing Platform | Skaiwel Trading & Solutions Inc. – Project 8 | Quezon City",
+      period: "04/2026 – Present",
       bullets: [
-        "Developed full-stack barangay info system digitizing community services and streamline administrative workflows.",
-        "Reduced manual reporting and processing time by an estimated 40–60% through digital automation of incident logging.",
-        "Implemented centralized, real-time records management for improved data accessibility."
+        "Extended a production-grade ride-hailing system across React Native (Expo) driver/passenger apps and a FastAPI backend, implementing end-to-end ride lifecycle flows including matching, live tracking, and trip state synchronization.",
+        "Improved real-time system reliability and scalability by designing a WebSocket-based update pipeline with Redis backed driver location fanout and geohash-based spatial throttling, significantly reducing redundant location updates while preserving map accuracy.",
+        "Delivered core platform features including OTP authentication, session management, map-based booking, routing with toll-aware fare estimation, rewards system, and optimized media pipelines, improving overall system responsiveness and user experience consistency."
       ],
-      tags: ["TailwindCSS", "MySQL", "IoT"],
-      documentLink: "https://drive.google.com/file/d/1MYFKqkLkBH8_ufQH2GA4TdoQaxAcxUNa/view?usp=sharing",
-      documentLabel: "View Related Document"
+      tags: ["React Native", "Expo", "FastAPI", "Redis", "WebSockets", "PostgreSQL"]
     },
     {
-      title: "MabInventory: Web-Based Ordering and Inventory Management",
-      company: "Mabini Vape Shop — National University – Fairview | Quezon City",
+      title: "Application Developer Intern",
+      company: "Full-Stack Inventory Management System | Skaiwel Trading & Solutions Inc. – Project 8 | Quezon City",
+      period: "12/2025 – 04/2026",
+      bullets: [
+        "Built and deployed a full-stack inventory operations platform (FastAPI, React, React Native/Expo), replacing a legacy system with a rebuilt, automated solution aligned to existing business workflows.",
+        "Reduced manual inventory handling by digitizing pull-out, return, transfer, and drop-off processes, integrating QR/barcode scanning, approval workflows, stock validation, and conflict prevention to ensure data integrity.",
+        "Enhanced data visibility and traceability through a centralized, role-based system with dashboards, analytics, searchable audit logs, and exportable reports, plus offline-capable mobile workflows for warehouse and admin operations."
+      ],
+      tags: ["FastAPI", "React", "React Native", "PostgreSQL", "Expo"]
+    },
+    {
+      title: "Full Stack Developer (Student)",
+      company: "Barangay Information System with IoT-Enabled Incident Reporting and E-Services | Barangay Gumaoc East — National University – Fairview | Quezon City",
+      period: "08/2025 – 10/2025",
+      bullets: [
+        "Developed and deployed a full-stack barangay information system with IoT-enabled incident reporting, digitizing public service workflows and administrative records management.",
+        "Reduced incident processing and reporting time by ~40–60% through automation of logging, record handling, and e-service request workflows.",
+        "Implemented a centralized real-time database system for barangay personnel, improving data accessibility and enabling faster coordination and decision-making."
+      ],
+      tags: ["React", "FastAPI", "IoT", "PostgreSQL", "TailwindCSS"]
+    },
+    {
+      title: "Full Stack Developer (Student)",
+      company: "MabInventory: Web-Based Ordering and Inventory Management System | Mabini Vape Shop — National University – Fairview | Quezon City",
       period: "03/2025 – 06/2025",
       bullets: [
-        "Automated stock monitoring and sales tracking for a retail business using a centralized inventory hub.",
-        "Increased inventory accuracy and reduced stock-out errors by 30–50% via automated alerts.",
-        "Optimized processing time by implementing real-time inventory updates and sales logging."
+        "Built a full-stack inventory and ordering system to automate stock monitoring and sales operations for a retail business.",
+        "Improved inventory accuracy by ~30–50% through automated stock tracking, low-stock alerts, and real-time inventory updates.",
+        "Reduced manual workload and order processing time by centralizing product management and digitizing order workflows."
       ],
-      tags: ["TailwindCSS", "MySQL", "Agile"],
-      documentLink: "https://drive.google.com/drive/folders/1jenoYQHzWElJWIpMGoR9ozGaTvKQlI-5?usp=sharing",
-      documentLabel: "View Related Documents"
+      tags: ["React", "FastAPI", "PostgreSQL", "TailwindCSS"]
     }
   ];
 
   const techStack = {
-    languages: ["Java", "Python", "C++", "PHP", "JavaScript", "TypeScript", "HTML", "CSS"],
-    frameworks: ["React (Web)", "React Native", "Expo", "FastAPI", "Django", "TailwindCSS", "SQLAlchemy"],
-    tools: ["PostgreSQL", "MySQL", "Git (CLI)", "Docker", "Vite", "Linux", "Agile"]
+    languages: ["Python", "JavaScript", "TypeScript", "HTML", "CSS"],
+    frameworks: ["React (Web)", "React Native", "Expo", "Expo Router", "FastAPI", "TailwindCSS", "NativeWind", "React Navigation", "Zustand", "Axios", "SQLAlchemy ORM", "Pydantic"],
+    tools: ["Node.js", "npm", "PostgreSQL", "Redis", "WebSockets", "JWT Authentication", "Uvicorn (ASGI)", "Git (CLI)", "Docker", "Docker Compose", "Vite", "ESLint", "Stylelint", "Pytest", "Agile"]
   };
 
   const certifications = [
