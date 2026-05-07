@@ -20,9 +20,9 @@ import {
   FaDatabase,
   FaDocker,
   FaLinux,
-  FaGitAlt,
-  FaProjectDiagram,
-  FaJs
+  FaCodeBranch,
+  FaJs,
+  FaProjectDiagram
 } from 'react-icons/fa';
 
 import {
@@ -35,19 +35,122 @@ import {
   SiPostgresql,
   SiMysql,
   SiVite,
-  SiGo
+  SiGo,
+  SiNodedotjs,
+  SiNpm,
+  SiRedis,
+  SiPostman,
+  SiEslint,
+  SiStylelint,
+  SiPytest,
+  SiReactrouter,
+  SiAxios,
+  SiSqlalchemy
 } from 'react-icons/si';
 
 import './App.css';
 
+// Add custom animations for side-drawer
+const modalStyles = `
+  @keyframes slideInRight {
+    0% { 
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% { 
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideOutRight {
+    0% { 
+      transform: translateX(0);
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% { 
+      transform: translateX(100%);
+      opacity: 0;
+    }
+  }
+
+  @keyframes fadeIn {
+    from { 
+      opacity: 0;
+    }
+    to { 
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideInFromBottom {
+    0% { 
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    100% { 
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes scaleIn {
+    0% { 
+      transform: scale(0.95);
+      opacity: 0;
+    }
+    100% { 
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  .drawer-enter {
+    animation: slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .drawer-exit {
+    animation: slideOutRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .backdrop-enter {
+    animation: fadeIn 0.3s ease-out forwards;
+  }
+
+  .content-stagger-1 {
+    animation: slideInFromBottom 0.5s ease-out 0.1s both;
+  }
+
+  .content-stagger-2 {
+    animation: slideInFromBottom 0.5s ease-out 0.2s both;
+  }
+
+  .content-stagger-3 {
+    animation: scaleIn 0.4s ease-out 0.3s both;
+  }
+`;
+
+// Inject styles into head
+if (typeof document !== 'undefined') {
+  const styleSheet = document.createElement('style');
+  styleSheet.textContent = modalStyles;
+  document.head.appendChild(styleSheet);
+}
+
 const BentoCard = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => (
-  <div className={`bg-[var(--card-bg)] border border-[var(--card-border)] rounded-2xl p-6 md:p-8 shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:scale-[1.01] h-full ${className}`}>
+  <div className={`bg-[var(--card-bg)] border border-[var(--card-border)] rounded-2xl p-4 md:p-6 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-lg hover:scale-[1.005] h-full ${className}`}>
     {children}
   </div>
 );
 
 const SectionHeading = ({ title }: { title: string }) => (
-  <div className="mb-8 border-b border-[var(--card-border)] pb-4">
+  <div className="mb-4 border-b border-[var(--card-border)] pb-2">
     <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-[var(--text-primary)]">{title}</h2>
   </div>
 );
@@ -70,72 +173,199 @@ const getSkillIcon = (skill: string) => {
   if (s.includes('sql')) return <FaDatabase className="text-sm opacity-80" />;
   if (s.includes('postgres')) return <SiPostgresql className="text-sm opacity-80" />;
   if (s.includes('mysql')) return <SiMysql className="text-sm opacity-80" />;
-  if (s.includes('git')) return <FaGitAlt className="text-sm opacity-80" />;
+  if (s.includes('git')) return <FaCodeBranch className="text-sm opacity-80" />;
   if (s.includes('docker')) return <FaDocker className="text-sm opacity-80" />;
   if (s.includes('vite')) return <SiVite className="text-sm opacity-80" />;
   if (s.includes('linux')) return <FaLinux className="text-sm opacity-80" />;
   if (s.includes('go')) return <SiGo className="text-sm opacity-80" />;
   if (s.includes('fiber')) return <SiGo className="text-sm opacity-80" />;
+  if (s.includes('node')) return <SiNodedotjs className="text-sm opacity-80" />;
+  if (s.includes('npm')) return <SiNpm className="text-sm opacity-80" />;
+  if (s.includes('redis')) return <SiRedis className="text-sm opacity-80" />;
+  if (s.includes('websocket')) return <SiPostman className="text-sm opacity-80" />;
+  if (s.includes('jwt')) return <FaCodeBranch className="text-sm opacity-80" />;
+  if (s.includes('uvicorn')) return <SiFastapi className="text-sm opacity-80" />;
+  if (s.includes('eslint')) return <SiEslint className="text-sm opacity-80" />;
+  if (s.includes('stylelint')) return <SiStylelint className="text-sm opacity-80" />;
+  if (s.includes('pytest')) return <SiPytest className="text-sm opacity-80" />;
+  if (s.includes('router')) return <SiReactrouter className="text-sm opacity-80" />;
+  if (s.includes('zustand')) return <SiAxios className="text-sm opacity-80" />;
+  if (s.includes('axios')) return <SiAxios className="text-sm opacity-80" />;
+  if (s.includes('sqlalchemy')) return <SiSqlalchemy className="text-sm opacity-80" />;
+  if (s.includes('nativewind')) return <SiTailwindcss className="text-sm opacity-80" />;
+  if (s.includes('react navigation')) return <SiReactrouter className="text-sm opacity-80" />;
+  if (s.includes('pydantic')) return <SiFastapi className="text-sm opacity-80" />;
   if (s.includes('iot') || s.includes('agile')) return <FaProjectDiagram className="text-sm opacity-80" />;
   return null;
 };
 
 const SkillPill = ({ children }: { children: React.ReactNode }) => {
   const icon = typeof children === 'string' ? getSkillIcon(children) : null;
+  
   return (
-    <span className="px-3 py-1.5 flex items-center gap-1.5 rounded-full text-[11px] font-bold border cursor-default transition-all duration-300 hover:scale-105 bg-[var(--card-bg)] border-[var(--card-border)] text-[var(--text-primary)] hover:shadow-md hover:border-slate-300 dark:hover:border-slate-500">
-      {icon}
-      {children}
+    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 h-8 rounded-full text-[11px] font-bold border cursor-default transition-all duration-200 bg-[var(--card-bg)] border-[var(--card-border)] text-[var(--text-primary)] hover:border-slate-300 dark:hover:border-slate-500 whitespace-nowrap">
+      {icon && <span className="flex-shrink-0">{icon}</span>}
+      <span className="truncate">{children}</span>
     </span>
   );
 };
 
-const ExperienceTimeline = ({ title, company, period, bullets, tags, documentLink, documentLabel }: { title: string, company: string, period: string, bullets: string[], tags: string[], documentLink?: string, documentLabel?: string }) => (
-  <div className="relative pl-8 pb-12 last:pb-0">
-    <div className="absolute left-0 top-3 bottom-0 w-[1px] bg-slate-300 dark:bg-slate-700 opacity-50" />
-    <div className="absolute left-[-5px] top-[10px] w-2.5 h-2.5 bg-blue-600 rounded-full border-2 border-[var(--card-bg)] z-10" />
+const ExperienceTimeline = ({ title, company, period, onViewDetails }: { title: string, company: string, period: string, onViewDetails: () => void }) => {
+  // Parse company string to extract project, company, and location
+  const parts = company.split(' | ');
+  const project = parts[0] || '';
+  const actualCompany = parts[1] || '';
+  const location = parts[2] || '';
 
-    <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-2">
-      <h3 className="text-base font-bold text-[var(--text-primary)] transition-colors">{title}</h3>
-      <span className="text-[10px] font-black uppercase text-[var(--text-primary)] opacity-80 shrink-0 font-mono tracking-tighter">{period}</span>
-    </div>
-    <p className="text-xs font-bold text-blue-600 dark:text-blue-400 mb-4 uppercase tracking-wide">{company}</p>
-    <ul className="space-y-4 mb-6">
-      {bullets.map((b, i) => (
-        <li key={i} className="text-sm text-[var(--text-primary)] leading-relaxed flex items-start gap-3">
-          <span className="w-1.5 h-1.5 bg-[var(--text-primary)] opacity-40 rounded-full mt-2 shrink-0" />
-          {b}
-        </li>
-      ))}
-    </ul>
-    <div className="flex flex-wrap gap-2">
-      {tags.map(t => <SkillPill key={t}>{t}</SkillPill>)}
-    </div>
-    {documentLink && (
-      <div className="mt-6">
-        <a href={documentLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-[var(--text-primary)] opacity-80 hover:opacity-100 dark:hover:text-blue-400 hover:text-blue-600 transition-colors">
-          <ExternalLink size={14} /> {documentLabel || "View Related Documents"}
-        </a>
+  return (
+    <div className="relative pl-8 pb-6 last:pb-0">
+      <div className="absolute left-0 top-3 bottom-0 w-[1px] bg-slate-300 dark:bg-slate-700 opacity-50" />
+      <div className="absolute left-[-5px] top-[10px] w-2.5 h-2.5 bg-blue-600 rounded-full border-2 border-[var(--card-bg)] z-10" />
+
+      <div 
+        className="cursor-pointer group"
+        onClick={onViewDetails}
+      >
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-3">
+          <h3 className="text-base font-bold text-[var(--text-primary)] transition-colors group-hover:text-blue-600 dark:group-hover:text-blue-400">{title}</h3>
+          <div className="flex items-center gap-2 shrink-0">
+            <span className="text-[10px] font-black uppercase text-[var(--text-primary)] opacity-80 font-mono tracking-tighter">{period}</span>
+            <svg className="w-4 h-4 text-blue-600 dark:text-blue-400 transition-colors group-hover:text-blue-700 dark:group-hover:text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </div>
+        </div>
+        
+        <div className="mb-3 space-y-1">
+          <p className="text-sm font-semibold text-[var(--text-primary)]">{project}</p>
+          <p className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wide">{actualCompany}</p>
+          <p className="text-[10px] text-[var(--text-primary)] opacity-70">{location}</p>
+        </div>
       </div>
-    )}
-  </div>
-);
+    </div>
+  );
+};
+
+const ExperienceModal = ({ experience, isOpen, onClose }: { experience: any, isOpen: boolean, onClose: () => void }) => {
+  if (!isOpen) return null;
+
+  const parts = experience.company.split(' | ');
+  const project = parts[0] || '';
+  const actualCompany = parts[1] || '';
+  const location = parts[2] || '';
+
+  return (
+    <div className="fixed inset-0 z-50 flex pointer-events-none" onClick={onClose}>
+      {/* Drawer */}
+      <div 
+        className="bg-[var(--card-bg)] border-l border-[var(--card-border)] w-[40%] shadow-2xl relative ml-auto pointer-events-auto drawer-enter overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="h-full flex flex-col">
+          {/* Header */}
+          <div className="border-b border-[var(--card-border)] p-5 md:p-6 pb-4 content-stagger-1">
+            <div className="flex justify-between items-start mb-4">
+              <div className="flex-1 pr-4">
+                <h2 className="text-xl md:text-2xl font-bold text-[var(--text-primary)] mb-3 leading-tight">{experience.title}</h2>
+                <div className="space-y-2">
+                  <p className="text-base font-semibold text-[var(--text-primary)]">{project}</p>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-sm font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">{actualCompany}</span>
+                    <span className="text-[var(--text-primary)] opacity-40">•</span>
+                    <span className="text-sm text-[var(--text-primary)] opacity-80">{location}</span>
+                  </div>
+                  <div className="flex items-center gap-2 pt-2">
+                    <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                    <p className="text-xs font-bold text-[var(--text-primary)] opacity-70 uppercase tracking-wider">{experience.period}</p>
+                  </div>
+                </div>
+              </div>
+              <button
+                onClick={onClose}
+                className="w-9 h-9 rounded-full bg-[var(--card-bg)] border border-[var(--card-border)] flex items-center justify-center text-[var(--text-primary)] opacity-60 hover:opacity-100 transition-all hover:scale-105 hover:rotate-90 duration-300"
+              >
+                <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          {/* Content */}
+          <div className="flex-1 overflow-y-auto p-5 md:p-6 pt-4">
+            <div className="space-y-6">
+              {/* Key Contributions */}
+              <div className="content-stagger-2">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-8 h-0.5 bg-gradient-to-r from-blue-600 to-transparent"></div>
+                  <h3 className="text-sm font-bold uppercase tracking-[0.15em] text-[var(--text-primary)]">Key Contributions</h3>
+                </div>
+                <ul className="space-y-3">
+                  {experience.bullets.map((b: string, i: number) => (
+                    <li key={i} className="text-sm text-[var(--text-primary)] leading-relaxed flex items-start gap-3 opacity-0" style={{
+                      animation: `slideInFromBottom 0.5s ease-out ${0.3 + i * 0.1}s both`
+                    }}>
+                      <span className="w-1.5 h-1.5 bg-blue-600 rounded-full mt-2 shrink-0"></span>
+                      <span className="flex-1">{b}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Tech Stack */}
+              <div className="content-stagger-3">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-8 h-0.5 bg-gradient-to-r from-blue-600 to-transparent"></div>
+                  <h3 className="text-sm font-bold uppercase tracking-[0.15em] text-[var(--text-primary)]">Tech Stack</h3>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {experience.tags.map((t: string, i: number) => (
+                    <div key={t} className="opacity-0" style={{
+                      animation: `scaleIn 0.3s ease-out ${0.4 + i * 0.05}s both`
+                    }}>
+                      <SkillPill>{t}</SkillPill>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Documents Link */}
+              {experience.documentLink && (
+                <div className="pt-4 border-t border-[var(--card-border)] opacity-0" style={{
+                  animation: 'slideInFromBottom 0.5s ease-out 0.6s both'
+                }}>
+                  <a 
+                    href={experience.documentLink} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="inline-flex items-center gap-3 px-4 py-2 bg-blue-600 text-white rounded-lg font-medium text-sm hover:bg-blue-700 transition-all hover:scale-105 hover:shadow-lg"
+                  >
+                    <ExternalLink size={16} />
+                    {experience.documentLabel || "View Related Documents"}
+                  </a>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const EducationBlock = ({ school, degree, period, honors }: { school: string, degree: string, period: string, honors?: React.ReactNode[] }) => (
-  <div className="mb-10 last:mb-0 pb-10 border-b border-[var(--card-border)] last:border-0 last:pb-0">
+  <div className="mb-4 last:mb-0 pb-4 border-b border-[var(--card-border)] last:border-0 last:pb-0">
     <h3 className="text-sm font-bold text-[var(--text-primary)] mb-1 leading-tight">{school}</h3>
     <p className="text-xs font-bold text-blue-600 dark:text-blue-400 mb-1">{degree}</p>
-    <p className="text-[10px] font-black text-[var(--text-primary)] opacity-80 uppercase tracking-[0.1em] mb-4">{period}</p>
+    <p className="text-[10px] font-black text-[var(--text-primary)] opacity-80 uppercase tracking-[0.1em] mb-3">{period}</p>
     {honors && (
-      <div className="bg-[var(--card-bg)] dark:bg-[var(--background)] p-4 rounded-xl border border-[var(--card-border)] mt-4">
-        <div className="space-y-3">
-          {honors.map((h, i) => (
-            <div key={i} className="text-[11px] font-bold text-[var(--text-primary)] leading-snug tracking-tight flex items-start gap-1.5">
-              <span className="mt-[2px]">•</span>
-              <div>{h}</div>
-            </div>
-          ))}
-        </div>
+      <div className="mt-3 space-y-2">
+        {honors.map((h, i) => (
+          <div key={i} className="text-[11px] font-bold text-[var(--text-primary)] leading-snug tracking-tight flex items-start gap-1.5">
+            <span className="mt-[2px] text-blue-500">•</span>
+            <div>{h}</div>
+          </div>
+        ))}
       </div>
     )}
   </div>
@@ -144,23 +374,27 @@ const EducationBlock = ({ school, degree, period, honors }: { school: string, de
 const CertGridItem = ({ name, date, link }: { name: string, date: string, link?: string }) => {
   const content = (
     <>
-      <div className="flex-1">
-        <p className="text-xs font-bold text-[var(--text-primary)] leading-snug">{name}</p>
+      <div className="flex-1 min-w-0">
+        <p className="text-xs font-bold text-[var(--text-primary)] leading-snug line-clamp-3">{name}</p>
         <p className="text-[9px] font-bold text-[var(--text-primary)] opacity-80 mt-2 uppercase tracking-tighter">{date}</p>
       </div>
       <Award size={14} className="text-[var(--text-primary)] opacity-40 shrink-0" />
     </>
   );
 
-  const className = `p-4 bg-[var(--card-bg)] border border-[var(--card-border)] rounded-xl transition-all duration-300 shadow-sm flex items-start justify-between gap-4 ${link ? 'hover:-translate-y-1 hover:shadow-md cursor-pointer hover:border-slate-300 dark:hover:border-slate-500' : ''}`;
+  const className = `h-full p-4 bg-transparent border border-[var(--card-border)] rounded-xl transition-all duration-200 flex flex-col justify-between gap-4 ${link ? 'cursor-pointer' : ''} hover:border-slate-300 dark:hover:border-slate-500`;
 
-  return link ? (
-    <a href={link} target="_blank" rel="noopener noreferrer" className={className}>
-      {content}
-    </a>
-  ) : (
-    <div className={className}>
-      {content}
+  return (
+    <div className="h-full min-h-[120px]">
+      {link ? (
+        <a href={link} target="_blank" rel="noopener noreferrer" className={className}>
+          {content}
+        </a>
+      ) : (
+        <div className={className}>
+          {content}
+        </div>
+      )}
     </div>
   );
 };
@@ -180,6 +414,7 @@ function App() {
     const saved = localStorage.getItem('theme');
     return saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches);
   });
+  const [selectedExperience, setSelectedExperience] = useState<any | null>(null);
 
   useEffect(() => {
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
@@ -194,7 +429,7 @@ function App() {
   const experiences = [
     {
       title: "Application Developer Intern",
-      company: "Sakai — Ride-Hailing Platform | Skaiwel Trading & Solutions Inc. – Project 8 | Quezon City",
+      company: "Sakai — Ride-Hailing Platform | Skaiwel Trading & Solutions Inc. | Project 8, Quezon City",
       period: "04/2026 – Present",
       bullets: [
         "Extended a production-grade ride-hailing system across React Native (Expo) driver/passenger apps and a FastAPI backend, implementing end-to-end ride lifecycle flows including matching, live tracking, and trip state synchronization.",
@@ -205,7 +440,7 @@ function App() {
     },
     {
       title: "Application Developer Intern",
-      company: "Full-Stack Inventory Management System | Skaiwel Trading & Solutions Inc. – Project 8 | Quezon City",
+      company: "Full-Stack Inventory Management System | Skaiwel Trading & Solutions Inc. | Project 8, Quezon City",
       period: "12/2025 – 04/2026",
       bullets: [
         "Built and deployed a full-stack inventory operations platform (FastAPI, React, React Native/Expo), replacing a legacy system with a rebuilt, automated solution aligned to existing business workflows.",
@@ -216,7 +451,7 @@ function App() {
     },
     {
       title: "Full Stack Developer (Student)",
-      company: "Barangay Information System with IoT-Enabled Incident Reporting and E-Services | Barangay Gumaoc East — National University – Fairview | Quezon City",
+      company: "Barangay Information System with IoT-Enabled Incident Reporting and E-Services | Barangay Gumaoc East — National University Fairview | Regalado Hwy, Quezon City",
       period: "08/2025 – 10/2025",
       bullets: [
         "Developed and deployed a full-stack barangay information system with IoT-enabled incident reporting, digitizing public service workflows and administrative records management.",
@@ -227,7 +462,7 @@ function App() {
     },
     {
       title: "Full Stack Developer (Student)",
-      company: "MabInventory: Web-Based Ordering and Inventory Management System | Mabini Vape Shop — National University – Fairview | Quezon City",
+      company: "MabInventory: Web-Based Ordering and Inventory Management System | Mabini Vape Shop — National University Fairview | Regalado Hwy, Quezon City",
       period: "03/2025 – 06/2025",
       bullets: [
         "Built a full-stack inventory and ordering system to automate stock monitoring and sales operations for a retail business.",
@@ -240,8 +475,8 @@ function App() {
 
   const techStack = {
     languages: ["Python", "JavaScript", "TypeScript", "HTML", "CSS"],
-    frameworks: ["React (Web)", "React Native", "Expo", "Expo Router", "FastAPI", "TailwindCSS", "NativeWind", "React Navigation", "Zustand", "Axios", "SQLAlchemy ORM", "Pydantic"],
-    tools: ["Node.js", "npm", "PostgreSQL", "Redis", "WebSockets", "JWT Authentication", "Uvicorn (ASGI)", "Git (CLI)", "Docker", "Docker Compose", "Vite", "ESLint", "Stylelint", "Pytest", "Agile"]
+    frameworks: ["React", "React Native", "Expo", "FastAPI", "TailwindCSS", "Zustand", "Axios", "SQLAlchemy", "Pydantic"],
+    tools: ["Node.js", "npm", "PostgreSQL", "Redis", "WebSockets", "JWT", "Uvicorn", "Git", "Docker", "Vite", "ESlint", "Stylelint", "Pytest", "Agile"]
   };
 
   const certifications = [
@@ -263,7 +498,7 @@ function App() {
       <main className="min-h-screen bg-[var(--background)] text-[var(--text-primary)] transition-colors duration-500 pt-12 pb-6 md:pt-20 md:pb-10 px-4">
         <div className="max-w-[1100px] mx-auto">
 
-          <div className="flex flex-col gap-10 md:gap-14">
+          <div className="flex flex-col gap-6 md:gap-8">
 
             <header className="flex flex-col md:flex-row items-center md:items-start justify-between gap-10">
               <div className="text-center md:text-left">
@@ -283,36 +518,96 @@ function App() {
               <div className="flex flex-col gap-4 w-full md:w-auto shrink-0">
                 <div className="flex gap-4 w-full">
                   <a href="https://linkedin.com/in/mcdofrenchfries" target="_blank" rel="noopener noreferrer"
-                    className="md:w-44 flex-1 md:flex-none flex items-center justify-center gap-3 py-4 bg-blue-600 text-white rounded-2xl font-black hover:bg-blue-700 transition-all text-xs uppercase tracking-widest shadow-xl shadow-blue-500/10">
+                    className="md:w-44 flex-1 md:flex-none flex items-center justify-center gap-3 py-4 bg-blue-600 text-white rounded-2xl font-black transition-all text-xs uppercase tracking-widest shadow-xl shadow-blue-500/10 hover:bg-blue-700 hover:shadow-blue-500/20 hover:scale-105 hover:-translate-y-0.5">
                     <Linkedin size={20} />
                     Connect
                   </a>
                   <a href="https://github.com/mcdofrenchfreis/" target="_blank" rel="noopener noreferrer"
-                    className="shrink-0 flex items-center justify-center w-14 h-14 bg-[var(--card-bg)] border border-[var(--card-border)] rounded-2xl hover:bg-slate-900 hover:text-white transition-all text-[var(--text-primary)]">
+                    className="shrink-0 flex items-center justify-center w-14 h-14 bg-[var(--card-bg)] border border-[var(--card-border)] rounded-2xl transition-all text-[var(--text-primary)] hover:bg-slate-900 hover:border-slate-700 hover:text-white hover:scale-110 hover:-translate-y-1 hover:shadow-lg dark:hover:bg-slate-100 dark:hover:border-slate-300 dark:hover:text-slate-900">
                     <Github size={22} />
                   </a>
                 </div>
-                <a href="/assets/Resume.DelaCruz-MarYvan.pdf" target="_blank" rel="noopener noreferrer" className="w-full flex items-center justify-center py-4 bg-[var(--card-bg)] border border-[var(--card-border)] rounded-2xl font-black hover:bg-slate-100 dark:hover:bg-slate-800 transition-all text-xs uppercase tracking-widest shadow-sm text-[var(--text-primary)]">
+                <a href="/assets/Resume.DelaCruz-MarYvan.pdf" target="_blank" rel="noopener noreferrer" className="w-full flex items-center justify-center py-4 bg-[var(--card-bg)] border border-[var(--card-border)] rounded-2xl font-black transition-all text-xs uppercase tracking-widest shadow-sm text-[var(--text-primary)] hover:bg-slate-900 hover:border-slate-700 hover:text-white hover:scale-110 hover:-translate-y-1 hover:shadow-lg dark:hover:bg-slate-100 dark:hover:border-slate-300 dark:hover:text-slate-900">
                   Resume
                 </a>
               </div>
             </header>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-10">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-stretch">
 
-              <div className="lg:col-span-8 flex flex-col gap-8 md:gap-10">
-                <BentoCard>
+              {/* First Row: Experience + Tech Stack */}
+              <div className="lg:col-span-8">
+                <BentoCard className="h-full">
                   <SectionHeading title="Experience" />
                   <div className="pt-2">
                     {experiences.map((exp, i) => (
-                      <ExperienceTimeline key={i} {...exp} />
+                      <ExperienceTimeline key={i} {...exp} onViewDetails={() => setSelectedExperience(exp)} />
                     ))}
                   </div>
                 </BentoCard>
+              </div>
 
+              <div className="lg:col-span-4">
+                <BentoCard className="relative overflow-hidden h-full">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full blur-3xl" />
+                  <SectionHeading title="Tech Stack" />
+                  <div className="space-y-4 mt-2 relative z-10">
+                    <div className="group">
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full" />
+                        <p className="text-[9px] font-black uppercase text-[var(--text-primary)] tracking-[0.2em]">Languages</p>
+                      </div>
+                      <div className="flex flex-wrap gap-1.5">
+                        {techStack.languages.map((s, i) => (
+                          <div key={s} className="opacity-0" style={{
+                            animation: `slideInFromBottom 0.4s ease-out ${i * 0.05}s both`
+                          }}>
+                            <SkillPill>{s}</SkillPill>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div className="group">
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full" />
+                        <p className="text-[9px] font-black uppercase text-[var(--text-primary)] tracking-[0.2em]">Frameworks</p>
+                      </div>
+                      <div className="flex flex-wrap gap-1.5 max-w-full">
+                        {techStack.frameworks.map((s, i) => (
+                          <div key={s} className="opacity-0" style={{
+                            animation: `slideInFromBottom 0.4s ease-out ${0.2 + i * 0.05}s both`
+                          }}>
+                            <SkillPill>{s}</SkillPill>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div className="group">
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="w-2 h-2 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full" />
+                        <p className="text-[9px] font-black uppercase text-[var(--text-primary)] tracking-[0.2em]">Tools</p>
+                      </div>
+                      <div className="flex flex-wrap gap-1.5">
+                        {techStack.tools.map((s, i) => (
+                          <div key={s} className="opacity-0" style={{
+                            animation: `slideInFromBottom 0.4s ease-out ${0.4 + i * 0.05}s both`
+                          }}>
+                            <SkillPill>{s}</SkillPill>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </BentoCard>
+              </div>
+
+              {/* Second Row: Certifications + Education */}
+              <div className="lg:col-span-8">
                 <BentoCard>
                   <SectionHeading title="Certifications" />
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-2">
                     {certifications.map((cert, i) => (
                       <CertGridItem key={i} {...cert} />
                     ))}
@@ -320,31 +615,7 @@ function App() {
                 </BentoCard>
               </div>
 
-              <div className="lg:col-span-4 flex flex-col gap-8 md:gap-10">
-                <BentoCard>
-                  <SectionHeading title="Stack" />
-                  <div className="space-y-12 mt-6">
-                    <div>
-                      <p className="text-[11px] font-black uppercase text-[var(--text-primary)] mb-6 tracking-[0.2em]">Core Languages</p>
-                      <div className="flex flex-wrap gap-2.5">
-                        {techStack.languages.map(s => <SkillPill key={s}>{s}</SkillPill>)}
-                      </div>
-                    </div>
-                    <div>
-                      <p className="text-[11px] font-black uppercase text-[var(--text-primary)] mb-6 tracking-[0.2em]">Frameworks</p>
-                      <div className="flex flex-wrap gap-2.5">
-                        {techStack.frameworks.map(s => <SkillPill key={s}>{s}</SkillPill>)}
-                      </div>
-                    </div>
-                    <div>
-                      <p className="text-[11px] font-black uppercase text-[var(--text-primary)] mb-6 tracking-[0.2em]">Workflow</p>
-                      <div className="flex flex-wrap gap-2.5">
-                        {techStack.tools.map(s => <SkillPill key={s}>{s}</SkillPill>)}
-                      </div>
-                    </div>
-                  </div>
-                </BentoCard>
-
+              <div className="lg:col-span-4">
                 <BentoCard>
                   <SectionHeading title="Education" />
                   <div className="pt-2">
@@ -354,7 +625,7 @@ function App() {
                       period="2022 - Present"
                       honors={[
                         <>
-                          Dean’s Lister (First Honors)
+                          Dean's Lister (First Honors)
                           <span className="block font-normal mt-1 opacity-80">Academic Years 2023–2024 & 2024–2025 (Term 1 & Term 2)</span>
                         </>
                       ]}
@@ -371,7 +642,7 @@ function App() {
 
             </div>
 
-            <footer className="pt-8 pb-6 flex justify-center items-center">
+            <footer className="pt-6 pb-4 flex justify-center items-center">
               <div className="flex items-center opacity-80 hover:opacity-100 transition-all duration-500 hover:scale-105 transform-gpu cursor-default">
                 <span className="text-[var(--text-primary)] text-xl md:text-3xl font-bold -mr-4 md:-mr-8 relative z-10">
                   &copy;
@@ -396,6 +667,12 @@ function App() {
           </div>
         </div>
       </main>
+
+      <ExperienceModal 
+        experience={selectedExperience} 
+        isOpen={!!selectedExperience} 
+        onClose={() => setSelectedExperience(null)} 
+      />
     </div>
   );
 }
