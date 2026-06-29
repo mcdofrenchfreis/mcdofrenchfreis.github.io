@@ -219,7 +219,7 @@ const ExperienceTimeline = ({ title, company, period, onViewDetails }: { title: 
   const location = parts[2] || '';
 
   return (
-    <div className="relative pl-8 pb-6 last:pb-0">
+    <div className="relative pl-8 pb-4 md:pb-3 last:pb-0">
       <div className="absolute left-0 top-3 bottom-0 w-[1px] bg-slate-300 dark:bg-slate-700 opacity-50" />
       <div className="absolute left-[-5px] top-[10px] w-2.5 h-2.5 bg-blue-600 rounded-full border-2 border-[var(--card-bg)] z-10" />
 
@@ -227,7 +227,7 @@ const ExperienceTimeline = ({ title, company, period, onViewDetails }: { title: 
         className="cursor-pointer group"
         onClick={onViewDetails}
       >
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-3">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-1 md:gap-2 mb-2">
           <h3 className="text-base font-bold text-[var(--text-primary)] transition-colors group-hover:text-blue-600 dark:group-hover:text-blue-400">{title}</h3>
           <div className="flex items-center gap-2 shrink-0">
             <span className="text-[10px] font-black uppercase text-[var(--text-primary)] opacity-80 font-mono tracking-tighter">{period}</span>
@@ -237,7 +237,7 @@ const ExperienceTimeline = ({ title, company, period, onViewDetails }: { title: 
           </div>
         </div>
         
-        <div className="mb-3 space-y-1">
+        <div className="space-y-0.5">
           <p className="text-sm font-semibold text-[var(--text-primary)]">{project}</p>
           <p className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wide">{actualCompany}</p>
           <p className="text-[10px] text-[var(--text-primary)] opacity-70">{location}</p>
@@ -394,7 +394,7 @@ const ThemeToggle = ({ isDark, onToggle }: { isDark: boolean, onToggle: () => vo
   <button
     onClick={onToggle}
     aria-label="Toggle dark mode"
-    className="fixed top-6 right-6 z-50 w-10 h-10 flex items-center justify-center rounded-full bg-[var(--card-bg)] border border-[var(--card-border)] shadow-lg cursor-pointer transition-all duration-300 hover:scale-110 active:scale-95"
+    className="fixed top-20 right-6 md:top-6 md:right-6 z-50 w-10 h-10 flex items-center justify-center rounded-full bg-[var(--card-bg)] border border-[var(--card-border)] shadow-lg cursor-pointer transition-all duration-300 hover:scale-110 active:scale-95"
   >
     {isDark ? <Sun size={18} className="text-yellow-500" /> : <Moon size={18} className="text-blue-600" />}
   </button>
