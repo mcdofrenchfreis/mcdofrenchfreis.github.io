@@ -144,7 +144,7 @@ if (typeof document !== 'undefined') {
 }
 
 const BentoCard = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => (
-  <div className={`bg-[var(--card-bg)] border border-[var(--card-border)] rounded-2xl p-4 md:p-6 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-lg hover:scale-[1.005] h-full ${className}`}>
+  <div className={`bg-[var(--card-bg)] border border-[var(--card-border)] rounded-2xl p-4 md:p-6 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-lg hover:scale-[1.005] h-fit ${className}`}>
     {children}
   </div>
 );
@@ -489,7 +489,7 @@ function App() {
       <main className="min-h-screen bg-[var(--background)] text-[var(--text-primary)] transition-colors duration-500 pt-12 pb-6 md:pt-20 md:pb-10 px-4">
         <div className="max-w-[1100px] mx-auto">
 
-          <div className="flex flex-col gap-6 md:gap-8">
+          <div className="flex flex-col gap-4 md:gap-6">
 
             <header className="flex flex-col md:flex-row items-center md:items-start justify-between gap-10">
               <div className="text-center md:text-left">
@@ -524,11 +524,11 @@ function App() {
               </div>
             </header>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-stretch">
-
-              {/* First Row: Experience + Tech Stack */}
-              <div className="lg:col-span-8">
-                <BentoCard className="h-full">
+            {/* Single grid with two vertical columns */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-start">
+              {/* Left Column: Experience + Certifications */}
+              <div className="lg:col-span-8 flex flex-col gap-4 md:gap-6">
+                <BentoCard>
                   <SectionHeading title="Experience" />
                   <div className="pt-2">
                     {experiences.map((exp, i) => (
@@ -536,10 +536,20 @@ function App() {
                     ))}
                   </div>
                 </BentoCard>
+
+                <BentoCard>
+                  <SectionHeading title="Certifications" />
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-2">
+                    {certifications.map((cert, i) => (
+                      <CertGridItem key={i} {...cert} />
+                    ))}
+                  </div>
+                </BentoCard>
               </div>
 
-              <div className="lg:col-span-4">
-                <BentoCard className="relative overflow-hidden h-full">
+              {/* Right Column: Tech Stack + Education */}
+              <div className="lg:col-span-4 flex flex-col gap-4 md:gap-6">
+                <BentoCard className="relative overflow-hidden">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full blur-3xl" />
                   <SectionHeading title="Tech Stack" />
                   <div className="space-y-4 mt-2 relative z-10">
@@ -592,21 +602,7 @@ function App() {
                     </div>
                   </div>
                 </BentoCard>
-              </div>
 
-              {/* Second Row: Certifications + Education */}
-              <div className="lg:col-span-8">
-                <BentoCard>
-                  <SectionHeading title="Certifications" />
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-2">
-                    {certifications.map((cert, i) => (
-                      <CertGridItem key={i} {...cert} />
-                    ))}
-                  </div>
-                </BentoCard>
-              </div>
-
-              <div className="lg:col-span-4">
                 <BentoCard>
                   <SectionHeading title="Education" />
                   <div className="pt-2">
@@ -624,7 +620,6 @@ function App() {
                   </div>
                 </BentoCard>
               </div>
-
             </div>
 
             <footer className="pt-6 pb-4 flex justify-center items-center">
