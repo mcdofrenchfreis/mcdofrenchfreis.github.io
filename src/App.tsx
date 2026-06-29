@@ -175,6 +175,7 @@ const getSkillIcon = (skill: string) => {
   if (s.includes('mysql')) return <SiMysql className="text-sm opacity-80" />;
   if (s.includes('git')) return <FaCodeBranch className="text-sm opacity-80" />;
   if (s.includes('docker')) return <FaDocker className="text-sm opacity-80" />;
+  if (s.includes('docker compose')) return <FaDocker className="text-sm opacity-80" />;
   if (s.includes('vite')) return <SiVite className="text-sm opacity-80" />;
   if (s.includes('linux')) return <FaLinux className="text-sm opacity-80" />;
   if (s.includes('go')) return <SiGo className="text-sm opacity-80" />;
@@ -255,10 +256,13 @@ const ExperienceModal = ({ experience, isOpen, onClose }: { experience: any, isO
   const location = parts[2] || '';
 
   return (
-    <div className="fixed inset-0 z-50 flex pointer-events-none" onClick={onClose}>
-      {/* Drawer */}
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none" onClick={onClose}>
+      {/* Backdrop */}
+      <div className="absolute inset-0 bg-black/50 backdrop-enter" />
+      
+      {/* Modal */}
       <div 
-        className="bg-[var(--card-bg)] border-l border-[var(--card-border)] w-[40%] shadow-2xl relative ml-auto pointer-events-auto drawer-enter overflow-hidden"
+        className="bg-[var(--card-bg)] border border-[var(--card-border)] w-full max-w-2xl max-h-[90vh] shadow-2xl relative pointer-events-auto drawer-enter overflow-hidden rounded-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="h-full flex flex-col">
@@ -282,7 +286,7 @@ const ExperienceModal = ({ experience, isOpen, onClose }: { experience: any, isO
               </div>
               <button
                 onClick={onClose}
-                className="w-9 h-9 rounded-full bg-[var(--card-bg)] border border-[var(--card-border)] flex items-center justify-center text-[var(--text-primary)] opacity-60 hover:opacity-100 transition-all hover:scale-105 hover:rotate-90 duration-300"
+                className="w-9 h-9 rounded-full bg-[var(--card-bg)] border border-[var(--card-border)] flex items-center justify-center text-[var(--text-primary)] opacity-60 hover:opacity-100 transition-all hover:scale-105 hover:rotate-90 duration-300 shrink-0"
               >
                 <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -429,54 +433,54 @@ function App() {
   const experiences = [
     {
       title: "Application Developer Intern",
-      company: "Sakai — Ride-Hailing Platform | Skaiwel Trading & Solutions Inc. | Project 8, Quezon City",
+      company: "Sakai – Ride Hailing Platform | Skaiwel Trading & Solutions Inc. | Quezon City",
       period: "04/2026 – Present",
       bullets: [
-        "Extended a production-grade ride-hailing system across React Native (Expo) driver/passenger apps and a FastAPI backend, implementing end-to-end ride lifecycle flows including matching, live tracking, and trip state synchronization.",
-        "Improved real-time system reliability and scalability by designing a WebSocket-based update pipeline with Redis backed driver location fanout and geohash-based spatial throttling, significantly reducing redundant location updates while preserving map accuracy.",
-        "Delivered core platform features including OTP authentication, session management, map-based booking, routing with toll-aware fare estimation, rewards system, and optimized media pipelines, improving overall system responsiveness and user experience consistency."
+        "Developed a real-time ride-hailing system using React Native (Expo) and FastAPI, implementing ride matching, live GPS tracking, and trip state synchronization across driver and passenger applications.",
+        "Designed a WebSocket + Redis-based location streaming architecture with geohash-based throttling to reduce redundant location updates and support high driver concurrency.",
+        "Implemented OTP-based authentication and dynamic fare computation logic to ensure secure session handling and consistent trip pricing."
       ],
       tags: ["React Native", "Expo", "FastAPI", "Redis", "WebSockets", "PostgreSQL"]
     },
     {
       title: "Application Developer Intern",
-      company: "Full-Stack Inventory Management System | Skaiwel Trading & Solutions Inc. | Project 8, Quezon City",
+      company: "Inventory Management System | Skaiwel Trading & Solutions Inc. | Quezon City",
       period: "12/2025 – 04/2026",
       bullets: [
-        "Built and deployed a full-stack inventory operations platform (FastAPI, React, React Native/Expo), replacing a legacy system with a rebuilt, automated solution aligned to existing business workflows.",
-        "Reduced manual inventory handling by digitizing pull-out, return, transfer, and drop-off processes, integrating QR/barcode scanning, approval workflows, stock validation, and conflict prevention to ensure data integrity.",
-        "Enhanced data visibility and traceability through a centralized, role-based system with dashboards, analytics, searchable audit logs, and exportable reports, plus offline-capable mobile workflows for warehouse and admin operations."
+        "Built a full-stack inventory management system using React and FastAPI to replace manual inventory tracking workflows.",
+        "Designed QR/barcode-based transaction flows (transfer, pull-out, return, drop-off) with validation rules to improve accuracy and traceability.",
+        "Developed role-based dashboards and reporting modules to improve stock visibility and operational decision-making."
       ],
-      tags: ["FastAPI", "React", "React Native", "PostgreSQL", "Expo"]
+      tags: ["FastAPI", "React", "PostgreSQL"]
     },
     {
-      title: "Full Stack Developer (Student)",
-      company: "Barangay Information System with IoT-Enabled Incident Reporting and E-Services | Barangay Gumaoc East — National University Fairview | Regalado Hwy, Quezon City",
+      title: "Full Stack Developer (Thesis Project)",
+      company: "IOT-Enabled Barangay Information System | Barangay Gumaoc East — National University | Quezon City",
       period: "08/2025 – 10/2025",
       bullets: [
-        "Developed and deployed a full-stack barangay information system with IoT-enabled incident reporting, digitizing public service workflows and administrative records management.",
-        "Reduced incident processing and reporting time by ~40–60% through automation of logging, record handling, and e-service request workflows.",
-        "Implemented a centralized real-time database system for barangay personnel, improving data accessibility and enabling faster coordination and decision-making."
+        "Developed a PHP/MySQL-based barangay information system for incident reporting, service requests, and resident record management.",
+        "Automated request processing workflows to reduce manual handling and improve administrative turnaround time.",
+        "Implemented centralized data management to improve record retrieval and coordination across barangay services."
       ],
-      tags: ["React", "FastAPI", "IoT", "PostgreSQL", "TailwindCSS"]
+      tags: ["PHP", "MySQL", "IoT"]
     },
     {
-      title: "Full Stack Developer (Student)",
-      company: "MabInventory: Web-Based Ordering and Inventory Management System | Mabini Vape Shop — National University Fairview | Regalado Hwy, Quezon City",
+      title: "Full Stack Developer (Thesis Project)",
+      company: "Ordering and Inventory Management System | Mabini Vape Shop — National University | Quezon City",
       period: "03/2025 – 06/2025",
       bullets: [
-        "Built a full-stack inventory and ordering system to automate stock monitoring and sales operations for a retail business.",
-        "Improved inventory accuracy by ~30–50% through automated stock tracking, low-stock alerts, and real-time inventory updates.",
-        "Reduced manual workload and order processing time by centralizing product management and digitizing order workflows."
+        "Built a PHP/MySQL ordering and inventory system to digitize sales and stock management processes.",
+        "Implemented real-time inventory tracking with low-stock alerts to prevent overselling and improve stock accuracy.",
+        "Streamlined order processing workflows to reduce manual encoding and improve transaction efficiency."
       ],
-      tags: ["React", "FastAPI", "PostgreSQL", "TailwindCSS"]
+      tags: ["PHP", "MySQL"]
     }
   ];
 
   const techStack = {
-    languages: ["Python", "JavaScript", "TypeScript", "HTML", "CSS"],
-    frameworks: ["React", "React Native", "Expo", "FastAPI", "TailwindCSS", "Zustand", "Axios", "SQLAlchemy", "Pydantic"],
-    tools: ["Node.js", "npm", "PostgreSQL", "Redis", "WebSockets", "JWT", "Uvicorn", "Git", "Docker", "Vite", "ESlint", "Stylelint", "Pytest", "Agile"]
+    languages: ["Python", "JavaScript", "TypeScript", "SQL", "HTML", "CSS"],
+    frameworks: ["React", "React Native", "Expo", "Expo Router", "React Navigation", "TailwindCSS", "NativeWind", "FastAPI", "Node.js", "SQLAlchemy", "Pydantic"],
+    tools: ["PostgreSQL", "Redis", "WebSockets", "JWT Authentication", "Docker", "Docker Compose", "Git", "Uvicorn", "Vite", "npm", "Pytest", "ESLint", "Agile Development"]
   };
 
   const certifications = [
@@ -484,11 +488,11 @@ function App() {
     { name: "Alibaba Cloud Auto Scaling Fundamentals", date: "06/2025", link: "https://drive.google.com/file/d/1v3OXdzFm2XI38YNZyhDnPp3Ih8FkYfPd/view?usp=sharing" },
     { name: "Alibaba Cloud SLB Fundamentals", date: "05/2025", link: "https://drive.google.com/file/d/1h8uhOrt9y2cpoSPiqen5DOMQZ_HXHXnD/view?usp=sharing" },
     { name: "Alibaba Cloud OSS Fundamentals", date: "05/2025", link: "https://drive.google.com/file/d/1fEbraGA295_DmK3yqoi3NtClHjzJFaKW/view?usp=sharing" },
-    { name: "Alibaba Cloud ECS Fundamentals", date: "05/2025", link: "https://drive.google.com/file/d/114QRpBjn5k4m4oUI9KKvoQ5lQpbs6L0_/view?usp=sharing" },
-    { name: "Alibaba Cloud ApsaraDB RDS Fundamentals", date: "05/2025", link: "https://drive.google.com/file/d/1rq75XZUjhydLsKVeqjYwVXXXA8DyJXNU/view?usp=sharing" },
+    { name: "Alibaba Cloud ECS Fundamentals", date: "04/2025", link: "https://drive.google.com/file/d/114QRpBjn5k4m4oUI9KKvoQ5lQpbs6L0_/view?usp=sharing" },
+    { name: "Alibaba Cloud ApsaraDB RDS Fundamentals", date: "04/2025", link: "https://drive.google.com/file/d/1rq75XZUjhydLsKVeqjYwVXXXA8DyJXNU/view?usp=sharing" },
     { name: "ACA Big Data Certification", date: "06/2024", link: "https://drive.google.com/file/d/1dzQ1DTuLPyKEJlbPHEATFGt2FAz7s6k8/view?usp=sharing" },
-    { name: "Oracle Cloud Infrastructure Associate", date: "08/2023", link: "https://catalog-education.oracle.com/ords/certview/sharebadge?id=BDE76515D95C5A2A68859AC180B3134AE763ABDA8760EC708990B1EFB5D01598" },
-    { name: "Oracle Cloud Data Associate", date: "08/2023", link: "https://catalog-education.oracle.com/ords/certview/sharebadge?id=948BC58FB0C9B1803710D9BF877E6D05058CED47A41DD9BD2250AFFBC052AAF0" }
+    { name: "OCI 2023 Certified Foundations Associate", date: "08/2023", link: "https://catalog-education.oracle.com/ords/certview/sharebadge?id=BDE76515D95C5A2A68859AC180B3134AE763ABDA8760EC708990B1EFB5D01598" },
+    { name: "Cloud Data Management Foundations Associate", date: "08/2023", link: "https://catalog-education.oracle.com/ords/certview/sharebadge?id=948BC58FB0C9B1803710D9BF877E6D05058CED47A41DD9BD2250AFFBC052AAF0" }
   ];
 
   return (
@@ -622,19 +626,13 @@ function App() {
                     <EducationBlock
                       school="National University – Fairview"
                       degree="Bachelor of Science in Information Technology, Major in Mobile and Internet Technologies"
-                      period="2022 - Present"
+                      period="06/2022 - Present"
                       honors={[
                         <>
                           Dean's Lister (First Honors)
-                          <span className="block font-normal mt-1 opacity-80">Academic Years 2023–2024 & 2024–2025 (Term 1 & Term 2)</span>
+                          <span className="block font-normal mt-1 opacity-80">1st Term AY 2023–2024; 1st & 2nd Term AY 2024–2025</span>
                         </>
                       ]}
-                    />
-                    <EducationBlock
-                      school="Access Computer College"
-                      degree="Senior High School (Information and Communications Technology)"
-                      period="2020 – 2022"
-                      honors={["Graduated with High Honors"]}
                     />
                   </div>
                 </BentoCard>
