@@ -257,99 +257,86 @@ const ExperienceModal = ({ experience, isOpen, onClose }: { experience: any, isO
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none" onClick={onClose}>
-      {/* Backdrop */}
       <div className="absolute inset-0 bg-black/50 backdrop-enter" />
-      
-      {/* Modal */}
       <div 
-        className="bg-[var(--card-bg)] border border-[var(--card-border)] w-full max-w-2xl max-h-[90vh] shadow-2xl relative pointer-events-auto drawer-enter overflow-hidden rounded-2xl"
+        className="bg-[var(--card-bg)] border border-[var(--card-border)] w-full max-w-2xl max-h-[85vh] md:max-h-[90vh] shadow-2xl relative pointer-events-auto drawer-enter overflow-hidden rounded-2xl flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="h-full flex flex-col">
-          {/* Header */}
-          <div className="border-b border-[var(--card-border)] p-5 md:p-6 pb-4 content-stagger-1">
-            <div className="flex justify-between items-start mb-4">
-              <div className="flex-1 pr-4">
-                <h2 className="text-xl md:text-2xl font-bold text-[var(--text-primary)] mb-3 leading-tight">{experience.title}</h2>
-                <div className="space-y-2">
-                  <p className="text-base font-semibold text-[var(--text-primary)]">{project}</p>
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-sm font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">{actualCompany}</span>
-                    <span className="text-[var(--text-primary)] opacity-40">•</span>
-                    <span className="text-sm text-[var(--text-primary)] opacity-80">{location}</span>
-                  </div>
-                  <div className="flex items-center gap-2 pt-2">
-                    <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
-                    <p className="text-xs font-bold text-[var(--text-primary)] opacity-70 uppercase tracking-wider">{experience.period}</p>
-                  </div>
+        <div className="border-b border-[var(--card-border)] p-5 md:p-6 pb-4 content-stagger-1 shrink-0">
+          <div className="flex justify-between items-start mb-4">
+            <div className="flex-1 pr-4">
+              <h2 className="text-xl md:text-2xl font-bold text-[var(--text-primary)] mb-3 leading-tight">{experience.title}</h2>
+              <div className="space-y-2">
+                <p className="text-base font-semibold text-[var(--text-primary)]">{project}</p>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="text-sm font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">{actualCompany}</span>
+                  <span className="text-[var(--text-primary)] opacity-40">•</span>
+                  <span className="text-sm text-[var(--text-primary)] opacity-80">{location}</span>
+                </div>
+                <div className="flex items-center gap-2 pt-2">
+                  <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                  <p className="text-xs font-bold text-[var(--text-primary)] opacity-70 uppercase tracking-wider">{experience.period}</p>
                 </div>
               </div>
-              <button
-                onClick={onClose}
-                className="w-9 h-9 rounded-full bg-[var(--card-bg)] border border-[var(--card-border)] flex items-center justify-center text-[var(--text-primary)] opacity-60 hover:opacity-100 transition-all hover:scale-105 hover:rotate-90 duration-300 shrink-0"
-              >
-                <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
             </div>
+            <button
+              onClick={onClose}
+              className="w-9 h-9 rounded-full bg-[var(--card-bg)] border border-[var(--card-border)] flex items-center justify-center text-[var(--text-primary)] opacity-60 hover:opacity-100 transition-all hover:scale-105 hover:rotate-90 duration-300 shrink-0"
+            >
+              <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
           </div>
-
-          {/* Content */}
-          <div className="flex-1 overflow-y-auto p-5 md:p-6 pt-4">
-            <div className="space-y-6">
-              {/* Key Contributions */}
-              <div className="content-stagger-2">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-8 h-0.5 bg-gradient-to-r from-blue-600 to-transparent"></div>
-                  <h3 className="text-sm font-bold uppercase tracking-[0.15em] text-[var(--text-primary)]">Key Contributions</h3>
-                </div>
-                <ul className="space-y-3">
-                  {experience.bullets.map((b: string, i: number) => (
-                    <li key={i} className="text-sm text-[var(--text-primary)] leading-relaxed flex items-start gap-3 opacity-0" style={{
-                      animation: `slideInFromBottom 0.5s ease-out ${0.3 + i * 0.1}s both`
-                    }}>
-                      <span className="w-1.5 h-1.5 bg-blue-600 rounded-full mt-2 shrink-0"></span>
-                      <span className="flex-1">{b}</span>
-                    </li>
-                  ))}
-                </ul>
+        </div>
+        <div className="flex-1 overflow-y-auto p-5 md:p-6 pt-4">
+          <div className="space-y-6">
+            <div className="content-stagger-2">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-8 h-0.5 bg-gradient-to-r from-blue-600 to-transparent"></div>
+                <h3 className="text-sm font-bold uppercase tracking-[0.15em] text-[var(--text-primary)]">Key Contributions</h3>
               </div>
-
-              {/* Tech Stack */}
-              <div className="content-stagger-3">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-8 h-0.5 bg-gradient-to-r from-blue-600 to-transparent"></div>
-                  <h3 className="text-sm font-bold uppercase tracking-[0.15em] text-[var(--text-primary)]">Tech Stack</h3>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {experience.tags.map((t: string, i: number) => (
-                    <div key={t} className="opacity-0" style={{
-                      animation: `scaleIn 0.3s ease-out ${0.4 + i * 0.05}s both`
-                    }}>
-                      <SkillPill>{t}</SkillPill>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Documents Link */}
-              {experience.documentLink && (
-                <div className="pt-4 border-t border-[var(--card-border)] opacity-0" style={{
-                  animation: 'slideInFromBottom 0.5s ease-out 0.6s both'
-                }}>
-                  <a 
-                    href={experience.documentLink} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="inline-flex items-center gap-3 px-4 py-2 bg-blue-600 text-white rounded-lg font-medium text-sm hover:bg-blue-700 transition-all hover:scale-105 hover:shadow-lg"
-                  >
-                    <ExternalLink size={16} />
-                    {experience.documentLabel || "View Related Documents"}
-                  </a>
-                </div>
-              )}
+              <ul className="space-y-3">
+                {experience.bullets.map((b: string, i: number) => (
+                  <li key={i} className="text-sm text-[var(--text-primary)] leading-relaxed flex items-start gap-3 opacity-0" style={{
+                    animation: `slideInFromBottom 0.5s ease-out ${0.3 + i * 0.1}s both`
+                  }}>
+                    <span className="w-1.5 h-1.5 bg-blue-600 rounded-full mt-2 shrink-0"></span>
+                    <span className="flex-1">{b}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
+            <div className="content-stagger-3">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-8 h-0.5 bg-gradient-to-r from-blue-600 to-transparent"></div>
+                <h3 className="text-sm font-bold uppercase tracking-[0.15em] text-[var(--text-primary)]">Tech Stack</h3>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {experience.tags.map((t: string, i: number) => (
+                  <div key={t} className="opacity-0" style={{
+                    animation: `scaleIn 0.3s ease-out ${0.4 + i * 0.05}s both`
+                  }}>
+                    <SkillPill>{t}</SkillPill>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {experience.documentLink && (
+              <div className="pt-4 border-t border-[var(--card-border)] opacity-0" style={{
+                animation: 'slideInFromBottom 0.5s ease-out 0.6s both'
+              }}>
+                <a 
+                  href={experience.documentLink} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="inline-flex items-center gap-3 px-4 py-2 bg-blue-600 text-white rounded-lg font-medium text-sm hover:bg-blue-700 transition-all hover:scale-105 hover:shadow-lg"
+                >
+                  <ExternalLink size={16} />
+                  {experience.documentLabel || "View Related Documents"}
+                </a>
+              </div>
+            )}
           </div>
         </div>
       </div>
